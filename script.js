@@ -39,10 +39,26 @@ function renderBiblioteca() {
       <h2>${libro.titulo}</h2>
       <p>${libro.autor}</p>
       <span class="estado estado-${libro.estado}">${libro.estado}</span>
+      <div class="acciones-libro">
+        <button class="boton-editar-libro" type="button">Editar</button>
+        <button class="boton-borrar-libro" type="button">Borrar</button>
+      </div>
     `;
 
     // Al hacer clic en la tarjeta, abrimos la vista de capítulos de ese libro.
     tarjeta.addEventListener("click", () => abrirVistaCapitulos(indice));
+
+    // Los botones están dentro de la tarjeta, así que frenamos la propagación
+    // del clic para que no dispare también el "abrir vista de capítulos".
+    tarjeta.querySelector(".boton-editar-libro").addEventListener("click", evento => {
+      evento.stopPropagation();
+      editarLibro(indice);
+    });
+
+    tarjeta.querySelector(".boton-borrar-libro").addEventListener("click", evento => {
+      evento.stopPropagation();
+      borrarLibro(indice);
+    });
 
     contenedor.appendChild(tarjeta);
   });
@@ -50,29 +66,72 @@ function renderBiblioteca() {
 
 renderBiblioteca();
 
-// --- Formulario para agregar libros ---
+// --- Formulario para agregar / editar libros ---
 
 const formulario = document.getElementById("form-agregar");
+const inputTitulo = document.getElementById("input-titulo");
+const inputAutor = document.getElementById("input-autor");
+const inputEstado = document.getElementById("input-estado");
+const botonGuardarLibro = document.getElementById("boton-guardar-libro");
+const botonCancelarEdicionLibro = document.getElementById("boton-cancelar-edicion-libro");
+
+// Si es null, el formulario está agregando un libro nuevo.
+// Si tiene un número, es el índice del libro que se está editando.
+let indiceLibroEditando = null;
+
+function borrarLibro(indice) {
+  const confirmado = confirm("¿Seguro que querés borrar este libro? También se van a borrar sus capítulos cargados.");
+  if (!confirmado) return;
+
+  libros.splice(indice, 1);
+  renderBiblioteca();
+}
+
+function editarLibro(indice) {
+  const libro = libros[indice];
+
+  indiceLibroEditando = indice;
+
+  inputTitulo.value = libro.titulo;
+  inputAutor.value = libro.autor;
+  inputEstado.value = libro.estado;
+
+  botonGuardarLibro.textContent = "Guardar cambios";
+  botonCancelarEdicionLibro.style.display = "inline-block";
+
+  formulario.scrollIntoView({ behavior: "smooth" });
+}
+
+function salirModoEdicionLibro() {
+  indiceLibroEditando = null;
+  formulario.reset();
+  botonGuardarLibro.textContent = "Agregar";
+  botonCancelarEdicionLibro.style.display = "none";
+}
+
+botonCancelarEdicionLibro.addEventListener("click", salirModoEdicionLibro);
 
 formulario.addEventListener("submit", evento => {
   // Evita que el formulario recargue la página (su comportamiento por defecto).
   evento.preventDefault();
 
-  const inputTitulo = document.getElementById("input-titulo");
-  const inputAutor = document.getElementById("input-autor");
-  const inputEstado = document.getElementById("input-estado");
-
-  libros.push({
-    titulo: inputTitulo.value,
-    autor: inputAutor.value,
-    estado: inputEstado.value,
-    capitulos: []
-  });
+  if (indiceLibroEditando === null) {
+    libros.push({
+      titulo: inputTitulo.value,
+      autor: inputAutor.value,
+      estado: inputEstado.value,
+      capitulos: []
+    });
+  } else {
+    // Actualizamos los datos del libro sin tocar los capítulos que ya tenía.
+    const libro = libros[indiceLibroEditando];
+    libro.titulo = inputTitulo.value;
+    libro.autor = inputAutor.value;
+    libro.estado = inputEstado.value;
+  }
 
   renderBiblioteca();
-
-  // Limpiamos el formulario para cargar el siguiente libro.
-  formulario.reset();
+  salirModoEdicionLibro();
 });
 
 // --- Vista de capítulos ---

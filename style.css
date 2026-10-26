@@ -24,18 +24,30 @@ h1 {
 }
 
 #form-agregar input,
-#form-agregar select,
-#form-agregar button {
+#form-agregar select {
   font-size: 1rem;
   padding: 8px;
   border-radius: 6px;
   border: 1px solid #ccc;
 }
 
-#form-agregar button {
+#boton-guardar-libro {
+  font-size: 1rem;
+  padding: 8px;
+  border-radius: 6px;
   background-color: #4a90d9;
   color: white;
   border: none;
+  cursor: pointer;
+}
+
+#form-agregar #boton-cancelar-edicion-libro {
+  font-size: 1rem;
+  padding: 8px;
+  border-radius: 6px;
+  background: none;
+  color: #2e2e2e;
+  border: 1px solid #ccc;
   cursor: pointer;
 }
 
@@ -83,6 +95,31 @@ h1 {
 
 .estado-abandonado {
   background-color: #999;
+}
+
+.acciones-libro {
+  display: flex;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.acciones-libro button {
+  font-size: 0.85rem;
+  padding: 6px 12px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  background-color: white;
+  cursor: pointer;
+}
+
+.boton-editar-libro {
+  color: #4a90d9;
+  border-color: #4a90d9;
+}
+
+.boton-borrar-libro {
+  color: #c0392b;
+  border-color: #c0392b;
 }
 
 /* --- Vista de capítulos --- */
