@@ -1,0 +1,57 @@
+body {
+  font-family: sans-serif;
+  background-color: #faf6f0;
+  color: #2e2e2e;
+  margin: 0;
+  padding: 16px;
+}
+
+h1 {
+  text-align: center;
+  font-size: 1.5rem;
+}
+
+#biblioteca {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.libro {
+  background-color: white;
+  border-radius: 10px;
+  padding: 16px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+}
+
+.libro h2 {
+  margin: 0 0 4px 0;
+  font-size: 1.1rem;
+}
+
+.libro p {
+  margin: 0 0 8px 0;
+  color: #666;
+}
+
+.estado {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  color: white;
+}
+
+.estado-leyendo {
+  background-color: #4a90d9;
+}
+
+.estado-terminado {
+  background-color: #4caf50;
+}
+
+.estado-abandonado {
+  background-color: #999;
+}
