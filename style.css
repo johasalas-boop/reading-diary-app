@@ -117,8 +117,8 @@ h1 {
   border: none;
   padding: 0;
   display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
+  flex-direction: column;
+  gap: 10px;
 }
 
 #fieldset-emociones legend {
@@ -127,11 +127,49 @@ h1 {
   padding: 0;
 }
 
-#fieldset-emociones label {
+#contenedor-chips-emociones {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.chip-emocion {
   font-size: 0.9rem;
+  font-family: inherit;
   background-color: #f0ebe3;
-  padding: 4px 10px;
+  color: #2e2e2e;
+  padding: 4px 12px;
   border-radius: 20px;
+  border: 1px solid transparent;
+  cursor: pointer;
+}
+
+.chip-emocion.seleccionado {
+  background-color: #4a90d9;
+  color: white;
+}
+
+#agregar-emocion {
+  display: flex;
+  gap: 8px;
+}
+
+#agregar-emocion input {
+  flex: 1;
+  font-size: 0.9rem;
+  padding: 6px 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+#agregar-emocion button {
+  font-size: 0.9rem;
+  padding: 6px 12px;
+  border-radius: 6px;
+  border: 1px solid #4a90d9;
+  background-color: white;
+  color: #4a90d9;
+  cursor: pointer;
 }
 
 #input-nota {
@@ -143,7 +181,7 @@ h1 {
   resize: vertical;
 }
 
-#form-capitulo button {
+#boton-guardar-capitulo {
   font-size: 1rem;
   padding: 8px;
   border-radius: 6px;

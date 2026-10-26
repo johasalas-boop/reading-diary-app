@@ -36,15 +36,11 @@
 
       <fieldset id="fieldset-emociones">
         <legend>Emociones</legend>
-        <label><input type="checkbox" name="emocion" value="tristeza"> Tristeza</label>
-        <label><input type="checkbox" name="emocion" value="tension"> Tensión</label>
-        <label><input type="checkbox" name="emocion" value="risa"> Risa</label>
-        <label><input type="checkbox" name="emocion" value="ternura"> Ternura</label>
-        <label><input type="checkbox" name="emocion" value="enojo"> Enojo</label>
-        <label><input type="checkbox" name="emocion" value="ansiedad"> Ansiedad</label>
-        <label><input type="checkbox" name="emocion" value="sorpresa"> Sorpresa</label>
-        <label><input type="checkbox" name="emocion" value="spicy"> Spicy</label>
-        <label><input type="checkbox" name="emocion" value="cringe"> Cringe</label>
+        <div id="contenedor-chips-emociones"></div>
+        <div id="agregar-emocion">
+          <input type="text" id="input-nueva-emocion" placeholder="Nueva emoción">
+          <button type="button" id="boton-agregar-emocion">+ Agregar</button>
+        </div>
       </fieldset>
 
       <textarea id="input-nota" placeholder="Nota corta (opcional)"></textarea>

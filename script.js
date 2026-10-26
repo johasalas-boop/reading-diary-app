@@ -152,6 +152,75 @@ const botonCancelarEdicion = document.getElementById("boton-cancelar-edicion");
 // Si tiene un número, es el índice del capítulo que se está editando.
 let indiceCapituloEditando = null;
 
+// --- Chips de emociones ---
+
+// Lista de emociones que se pueden elegir. Arranca con las 9 de siempre,
+// pero se le pueden sumar nuevas con el botón "+ Agregar".
+let emocionesDisponibles = [
+  "tristeza", "tension", "risa", "ternura", "enojo",
+  "ansiedad", "sorpresa", "spicy", "cringe"
+];
+
+// Las emociones marcadas en el formulario que está abierto en este momento.
+let emocionesSeleccionadas = [];
+
+const contenedorChipsEmociones = document.getElementById("contenedor-chips-emociones");
+const inputNuevaEmocion = document.getElementById("input-nueva-emocion");
+const botonAgregarEmocion = document.getElementById("boton-agregar-emocion");
+
+// Dibuja un chip por cada emoción disponible, marcando los que estén seleccionados.
+function renderChipsEmociones() {
+  contenedorChipsEmociones.innerHTML = "";
+
+  emocionesDisponibles.forEach(emocion => {
+    const chip = document.createElement("button");
+    chip.type = "button";
+    chip.className = "chip-emocion";
+    chip.textContent = emocion;
+
+    if (emocionesSeleccionadas.includes(emocion)) {
+      chip.classList.add("seleccionado");
+    }
+
+    chip.addEventListener("click", () => {
+      if (emocionesSeleccionadas.includes(emocion)) {
+        // Ya estaba marcada: la sacamos.
+        emocionesSeleccionadas = emocionesSeleccionadas.filter(e => e !== emocion);
+      } else {
+        // No estaba marcada: la agregamos.
+        emocionesSeleccionadas.push(emocion);
+      }
+      renderChipsEmociones();
+    });
+
+    contenedorChipsEmociones.appendChild(chip);
+  });
+}
+
+renderChipsEmociones();
+
+botonAgregarEmocion.addEventListener("click", () => {
+  const nombreNuevaEmocion = inputNuevaEmocion.value.trim();
+  if (!nombreNuevaEmocion) return;
+
+  // Evitamos duplicados sin importar mayúsculas/minúsculas.
+  const yaExiste = emocionesDisponibles.some(
+    emocion => emocion.toLowerCase() === nombreNuevaEmocion.toLowerCase()
+  );
+
+  if (!yaExiste) {
+    emocionesDisponibles.push(nombreNuevaEmocion);
+  }
+
+  // La dejamos seleccionada de una, ya que la acabás de cargar para este capítulo.
+  if (!emocionesSeleccionadas.includes(nombreNuevaEmocion)) {
+    emocionesSeleccionadas.push(nombreNuevaEmocion);
+  }
+
+  inputNuevaEmocion.value = "";
+  renderChipsEmociones();
+});
+
 function borrarCapitulo(indice) {
   const confirmado = confirm("¿Seguro que querés borrar este capítulo?");
   if (!confirmado) return;
@@ -170,10 +239,16 @@ function editarCapitulo(indice) {
   valorIntensidad.textContent = capitulo.intensidad;
   inputNota.value = capitulo.nota;
 
-  // Marcamos los checkboxes que correspondan a las emociones guardadas.
-  document.querySelectorAll('input[name="emocion"]').forEach(checkbox => {
-    checkbox.checked = capitulo.emociones.includes(checkbox.value);
+  // Si el capítulo tiene alguna emoción que ya no está en la lista disponible
+  // (por ejemplo, se cargó en otra sesión), la agregamos para poder mostrarla marcada.
+  capitulo.emociones.forEach(emocion => {
+    if (!emocionesDisponibles.includes(emocion)) {
+      emocionesDisponibles.push(emocion);
+    }
   });
+
+  emocionesSeleccionadas = [...capitulo.emociones];
+  renderChipsEmociones();
 
   botonGuardarCapitulo.textContent = "Guardar cambios";
   botonCancelarEdicion.style.display = "inline-block";
@@ -186,6 +261,8 @@ function salirModoEdicion() {
   indiceCapituloEditando = null;
   formularioCapitulo.reset();
   valorIntensidad.textContent = "0";
+  emocionesSeleccionadas = [];
+  renderChipsEmociones();
   botonGuardarCapitulo.textContent = "Agregar capítulo";
   botonCancelarEdicion.style.display = "none";
 }
@@ -195,14 +272,10 @@ botonCancelarEdicion.addEventListener("click", salirModoEdicion);
 formularioCapitulo.addEventListener("submit", evento => {
   evento.preventDefault();
 
-  // Juntamos los checkboxes de emociones que estén marcados.
-  const checkboxesMarcados = document.querySelectorAll('input[name="emocion"]:checked');
-  const emociones = Array.from(checkboxesMarcados).map(checkbox => checkbox.value);
-
   const datosCapitulo = {
     nombre: inputNombreCapitulo.value,
     intensidad: Number(inputIntensidad.value),
-    emociones: emociones,
+    emociones: [...emocionesSeleccionadas],
     nota: inputNota.value
   };
 
