@@ -227,6 +227,51 @@ h1 {
   cursor: pointer;
 }
 
+#seccion-grafico {
+  background-color: white;
+  border-radius: 10px;
+  padding: 16px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+}
+
+#seccion-grafico h2 {
+  margin: 0 0 12px 0;
+  font-size: 1.1rem;
+}
+
+#grafico-emocional {
+  width: 100%;
+  height: auto;
+}
+
+#mensaje-grafico-vacio {
+  color: #888;
+  font-size: 0.9rem;
+  margin: 0;
+}
+
+.linea-nivel {
+  stroke: #e5e0d8;
+  stroke-width: 1;
+}
+
+.etiqueta-nivel {
+  font-size: 8px;
+  fill: #999;
+  text-anchor: end;
+}
+
+.linea-curva {
+  fill: none;
+  stroke: #4a90d9;
+  stroke-width: 2;
+}
+
+.punto-curva {
+  fill: #4a90d9;
+}
+
 .boton-editar {
   color: #4a90d9;
   border-color: #4a90d9;

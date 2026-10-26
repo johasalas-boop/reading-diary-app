@@ -130,6 +130,87 @@ function renderCapitulos() {
 
     listaCapitulos.appendChild(tarjeta);
   });
+
+  renderGrafico();
+}
+
+// --- Curva emocional ---
+
+// Los elementos SVG no se crean con document.createElement (eso es para HTML),
+// sino con document.createElementNS, pasándole la "dirección" del lenguaje SVG.
+const svgNS = "http://www.w3.org/2000/svg";
+
+const graficoEmocional = document.getElementById("grafico-emocional");
+const mensajeGraficoVacio = document.getElementById("mensaje-grafico-vacio");
+
+// Dibuja la curva de intensidad emocional del libro que se está viendo.
+function renderGrafico() {
+  const capitulos = libros[indiceLibroActual].capitulos;
+
+  if (capitulos.length === 0) {
+    graficoEmocional.style.display = "none";
+    mensajeGraficoVacio.style.display = "block";
+    return;
+  }
+
+  graficoEmocional.style.display = "block";
+  mensajeGraficoVacio.style.display = "none";
+  graficoEmocional.innerHTML = "";
+
+  // Medidas del "lienzo" (coinciden con el viewBox del SVG en el HTML).
+  const ancho = 300;
+  const alto = 160;
+  const margen = 20;
+  const anchoGrafico = ancho - margen * 2;
+  const altoGrafico = alto - margen * 2;
+
+  // Líneas horizontales de fondo, una por cada nivel de intensidad (0 a 5).
+  for (let nivel = 0; nivel <= 5; nivel++) {
+    const y = margen + ((5 - nivel) / 5) * altoGrafico;
+
+    const linea = document.createElementNS(svgNS, "line");
+    linea.setAttribute("x1", margen);
+    linea.setAttribute("x2", ancho - margen);
+    linea.setAttribute("y1", y);
+    linea.setAttribute("y2", y);
+    linea.setAttribute("class", "linea-nivel");
+    graficoEmocional.appendChild(linea);
+
+    const etiqueta = document.createElementNS(svgNS, "text");
+    etiqueta.setAttribute("x", margen - 6);
+    etiqueta.setAttribute("y", y + 3);
+    etiqueta.setAttribute("class", "etiqueta-nivel");
+    etiqueta.textContent = nivel;
+    graficoEmocional.appendChild(etiqueta);
+  }
+
+  // Calculamos la posición (x, y) de cada capítulo según su intensidad.
+  const puntos = capitulos.map((capitulo, indice) => {
+    const x = capitulos.length === 1
+      ? margen + anchoGrafico / 2
+      : margen + (indice / (capitulos.length - 1)) * anchoGrafico;
+    const y = margen + ((5 - capitulo.intensidad) / 5) * altoGrafico;
+    return { x, y };
+  });
+
+  // La línea que conecta los puntos (solo tiene sentido con 2 o más capítulos).
+  if (puntos.length > 1) {
+    const puntosTexto = puntos.map(punto => `${punto.x},${punto.y}`).join(" ");
+    const linea = document.createElementNS(svgNS, "polyline");
+    linea.setAttribute("points", puntosTexto);
+    linea.setAttribute("class", "linea-curva");
+    graficoEmocional.appendChild(linea);
+  }
+
+  // Un círculo por cada capítulo.
+  puntos.forEach(punto => {
+    const circulo = document.createElementNS(svgNS, "circle");
+    circulo.setAttribute("cx", punto.x);
+    circulo.setAttribute("cy", punto.y);
+    circulo.setAttribute("r", 4);
+    circulo.setAttribute("class", "punto-curva");
+    graficoEmocional.appendChild(circulo);
+  });
 }
 
 // El número al lado del slider se actualiza mientras lo arrastrás.
