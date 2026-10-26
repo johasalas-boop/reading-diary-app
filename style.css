@@ -11,6 +11,34 @@ h1 {
   font-size: 1.5rem;
 }
 
+#form-agregar {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-width: 500px;
+  margin: 0 auto 20px auto;
+  background-color: white;
+  border-radius: 10px;
+  padding: 16px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+}
+
+#form-agregar input,
+#form-agregar select,
+#form-agregar button {
+  font-size: 1rem;
+  padding: 8px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+#form-agregar button {
+  background-color: #4a90d9;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
 #biblioteca {
   display: flex;
   flex-direction: column;

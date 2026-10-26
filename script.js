@@ -20,16 +20,48 @@ const libros = [
 // Busca la caja vacía del HTML (el div con id "biblioteca").
 const contenedor = document.getElementById("biblioteca");
 
-// Por cada libro, armamos su tarjeta en HTML y la agregamos a la caja.
-libros.forEach(libro => {
-  const tarjeta = document.createElement("div");
-  tarjeta.className = "libro";
+// Dibuja todos los libros del array en pantalla.
+// La llamamos al abrir la página, y de nuevo cada vez que se agrega un libro.
+function renderBiblioteca() {
+  // Vaciamos la caja antes de volver a dibujar, para no duplicar tarjetas.
+  contenedor.innerHTML = "";
 
-  tarjeta.innerHTML = `
-    <h2>${libro.titulo}</h2>
-    <p>${libro.autor}</p>
-    <span class="estado estado-${libro.estado}">${libro.estado}</span>
-  `;
+  libros.forEach(libro => {
+    const tarjeta = document.createElement("div");
+    tarjeta.className = "libro";
 
-  contenedor.appendChild(tarjeta);
+    tarjeta.innerHTML = `
+      <h2>${libro.titulo}</h2>
+      <p>${libro.autor}</p>
+      <span class="estado estado-${libro.estado}">${libro.estado}</span>
+    `;
+
+    contenedor.appendChild(tarjeta);
+  });
+}
+
+renderBiblioteca();
+
+// --- Formulario para agregar libros ---
+
+const formulario = document.getElementById("form-agregar");
+
+formulario.addEventListener("submit", evento => {
+  // Evita que el formulario recargue la página (su comportamiento por defecto).
+  evento.preventDefault();
+
+  const inputTitulo = document.getElementById("input-titulo");
+  const inputAutor = document.getElementById("input-autor");
+  const inputEstado = document.getElementById("input-estado");
+
+  libros.push({
+    titulo: inputTitulo.value,
+    autor: inputAutor.value,
+    estado: inputEstado.value
+  });
+
+  renderBiblioteca();
+
+  // Limpiamos el formulario para cargar el siguiente libro.
+  formulario.reset();
 });

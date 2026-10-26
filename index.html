@@ -9,6 +9,17 @@
 <body>
   <h1>Mi biblioteca</h1>
 
+  <form id="form-agregar">
+    <input type="text" id="input-titulo" placeholder="Título" required>
+    <input type="text" id="input-autor" placeholder="Autor" required>
+    <select id="input-estado">
+      <option value="leyendo">Leyendo</option>
+      <option value="terminado">Terminado</option>
+      <option value="abandonado">Abandonado</option>
+    </select>
+    <button type="submit">Agregar</button>
+  </form>
+
   <div id="biblioteca"></div>
 
   <script src="script.js"></script>
