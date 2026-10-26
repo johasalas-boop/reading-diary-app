@@ -1,5 +1,6 @@
-// Datos de ejemplo (inventados) para probar la app sin usar datos reales.
-const libros = [
+// Datos de ejemplo (inventados), para que cualquiera pueda probar la app
+// la primera vez que la abre, antes de cargar sus propios libros.
+const librosDeEjemplo = [
   {
     titulo: "The Vegetarian",
     autor: "Han Kang",
@@ -19,6 +20,21 @@ const libros = [
     capitulos: []
   }
 ];
+
+// localStorage es un "cajón" que cada navegador guarda en el dispositivo,
+// y sigue teniendo los datos aunque cierres o recargues la página.
+// Si ya hay libros guardados ahí, los usamos; si no, arrancamos con los de ejemplo.
+function cargarLibros() {
+  const guardado = localStorage.getItem("libros");
+  return guardado ? JSON.parse(guardado) : librosDeEjemplo;
+}
+
+// Escribe el array "libros" completo en localStorage, tal como está en este momento.
+function guardarLibros() {
+  localStorage.setItem("libros", JSON.stringify(libros));
+}
+
+const libros = cargarLibros();
 
 // --- Vista de biblioteca ---
 
@@ -84,6 +100,7 @@ function borrarLibro(indice) {
   if (!confirmado) return;
 
   libros.splice(indice, 1);
+  guardarLibros();
   renderBiblioteca();
 }
 
@@ -130,6 +147,7 @@ formulario.addEventListener("submit", evento => {
     libro.estado = inputEstado.value;
   }
 
+  guardarLibros();
   renderBiblioteca();
   salirModoEdicionLibro();
 });
@@ -296,10 +314,21 @@ let indiceCapituloEditando = null;
 
 // Lista de emociones que se pueden elegir. Arranca con las 9 de siempre,
 // pero se le pueden sumar nuevas con el botón "+ Agregar".
-let emocionesDisponibles = [
+const emocionesBase = [
   "tristeza", "tension", "risa", "ternura", "enojo",
   "ansiedad", "sorpresa", "spicy", "cringe"
 ];
+
+function cargarEmociones() {
+  const guardado = localStorage.getItem("emocionesDisponibles");
+  return guardado ? JSON.parse(guardado) : emocionesBase;
+}
+
+function guardarEmociones() {
+  localStorage.setItem("emocionesDisponibles", JSON.stringify(emocionesDisponibles));
+}
+
+let emocionesDisponibles = cargarEmociones();
 
 // Las emociones marcadas en el formulario que está abierto en este momento.
 let emocionesSeleccionadas = [];
@@ -358,6 +387,7 @@ botonAgregarEmocion.addEventListener("click", () => {
   }
 
   inputNuevaEmocion.value = "";
+  guardarEmociones();
   renderChipsEmociones();
 });
 
@@ -366,6 +396,7 @@ function borrarCapitulo(indice) {
   if (!confirmado) return;
 
   libros[indiceLibroActual].capitulos.splice(indice, 1);
+  guardarLibros();
   renderCapitulos();
 }
 
@@ -425,6 +456,7 @@ formularioCapitulo.addEventListener("submit", evento => {
     libros[indiceLibroActual].capitulos[indiceCapituloEditando] = datosCapitulo;
   }
 
+  guardarLibros();
   renderCapitulos();
   salirModoEdicion();
 });
