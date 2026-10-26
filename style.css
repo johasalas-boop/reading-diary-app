@@ -173,3 +173,34 @@ h1 {
 .nota-capitulo {
   font-style: italic;
 }
+
+.acciones-capitulo {
+  display: flex;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.acciones-capitulo button {
+  font-size: 0.85rem;
+  padding: 6px 12px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  background-color: white;
+  cursor: pointer;
+}
+
+.boton-editar {
+  color: #4a90d9;
+  border-color: #4a90d9;
+}
+
+.boton-borrar {
+  color: #c0392b;
+  border-color: #c0392b;
+}
+
+#form-capitulo #boton-cancelar-edicion {
+  background: none;
+  color: #2e2e2e;
+  border: 1px solid #ccc;
+}

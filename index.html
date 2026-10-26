@@ -29,6 +29,8 @@
     <h1 id="titulo-libro-actual"></h1>
 
     <form id="form-capitulo">
+      <input type="text" id="input-nombre-capitulo" placeholder="Nombre del capítulo (opcional)">
+
       <label for="input-intensidad">Intensidad emocional: <span id="valor-intensidad">0</span></label>
       <input type="range" id="input-intensidad" min="0" max="5" step="1" value="0">
 
@@ -47,7 +49,8 @@
 
       <textarea id="input-nota" placeholder="Nota corta (opcional)"></textarea>
 
-      <button type="submit">Agregar capítulo</button>
+      <button type="submit" id="boton-guardar-capitulo">Agregar capítulo</button>
+      <button type="button" id="boton-cancelar-edicion" style="display: none;">Cancelar edición</button>
     </form>
 
     <div id="lista-capitulos"></div>

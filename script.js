@@ -110,13 +110,23 @@ function renderCapitulos() {
     tarjeta.className = "capitulo";
 
     const emocionesTexto = capitulo.emociones.join(", ");
+    const encabezado = capitulo.nombre
+      ? `Capítulo ${indice + 1} — ${capitulo.nombre}`
+      : `Capítulo ${indice + 1}`;
 
     tarjeta.innerHTML = `
-      <h3>Capítulo ${indice + 1}</h3>
+      <h3>${encabezado}</h3>
       <p>Intensidad: ${capitulo.intensidad} / 5</p>
       <p>Emociones: ${emocionesTexto || "(ninguna marcada)"}</p>
       ${capitulo.nota ? `<p class="nota-capitulo">"${capitulo.nota}"</p>` : ""}
+      <div class="acciones-capitulo">
+        <button class="boton-editar" type="button">Editar</button>
+        <button class="boton-borrar" type="button">Borrar</button>
+      </div>
     `;
+
+    tarjeta.querySelector(".boton-editar").addEventListener("click", () => editarCapitulo(indice));
+    tarjeta.querySelector(".boton-borrar").addEventListener("click", () => borrarCapitulo(indice));
 
     listaCapitulos.appendChild(tarjeta);
   });
@@ -130,10 +140,57 @@ inputIntensidad.addEventListener("input", () => {
   valorIntensidad.textContent = inputIntensidad.value;
 });
 
-// --- Formulario para agregar capítulos ---
+// --- Formulario para agregar / editar capítulos ---
 
 const formularioCapitulo = document.getElementById("form-capitulo");
+const inputNombreCapitulo = document.getElementById("input-nombre-capitulo");
 const inputNota = document.getElementById("input-nota");
+const botonGuardarCapitulo = document.getElementById("boton-guardar-capitulo");
+const botonCancelarEdicion = document.getElementById("boton-cancelar-edicion");
+
+// Si es null, el formulario está agregando un capítulo nuevo.
+// Si tiene un número, es el índice del capítulo que se está editando.
+let indiceCapituloEditando = null;
+
+function borrarCapitulo(indice) {
+  const confirmado = confirm("¿Seguro que querés borrar este capítulo?");
+  if (!confirmado) return;
+
+  libros[indiceLibroActual].capitulos.splice(indice, 1);
+  renderCapitulos();
+}
+
+function editarCapitulo(indice) {
+  const capitulo = libros[indiceLibroActual].capitulos[indice];
+
+  indiceCapituloEditando = indice;
+
+  inputNombreCapitulo.value = capitulo.nombre;
+  inputIntensidad.value = capitulo.intensidad;
+  valorIntensidad.textContent = capitulo.intensidad;
+  inputNota.value = capitulo.nota;
+
+  // Marcamos los checkboxes que correspondan a las emociones guardadas.
+  document.querySelectorAll('input[name="emocion"]').forEach(checkbox => {
+    checkbox.checked = capitulo.emociones.includes(checkbox.value);
+  });
+
+  botonGuardarCapitulo.textContent = "Guardar cambios";
+  botonCancelarEdicion.style.display = "inline-block";
+
+  // Llevamos la vista hacia el formulario, por si el capítulo estaba más abajo.
+  formularioCapitulo.scrollIntoView({ behavior: "smooth" });
+}
+
+function salirModoEdicion() {
+  indiceCapituloEditando = null;
+  formularioCapitulo.reset();
+  valorIntensidad.textContent = "0";
+  botonGuardarCapitulo.textContent = "Agregar capítulo";
+  botonCancelarEdicion.style.display = "none";
+}
+
+botonCancelarEdicion.addEventListener("click", salirModoEdicion);
 
 formularioCapitulo.addEventListener("submit", evento => {
   evento.preventDefault();
@@ -142,14 +199,19 @@ formularioCapitulo.addEventListener("submit", evento => {
   const checkboxesMarcados = document.querySelectorAll('input[name="emocion"]:checked');
   const emociones = Array.from(checkboxesMarcados).map(checkbox => checkbox.value);
 
-  libros[indiceLibroActual].capitulos.push({
+  const datosCapitulo = {
+    nombre: inputNombreCapitulo.value,
     intensidad: Number(inputIntensidad.value),
     emociones: emociones,
     nota: inputNota.value
-  });
+  };
+
+  if (indiceCapituloEditando === null) {
+    libros[indiceLibroActual].capitulos.push(datosCapitulo);
+  } else {
+    libros[indiceLibroActual].capitulos[indiceCapituloEditando] = datosCapitulo;
+  }
 
   renderCapitulos();
-
-  formularioCapitulo.reset();
-  valorIntensidad.textContent = "0";
+  salirModoEdicion();
 });
