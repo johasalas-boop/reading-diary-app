@@ -52,6 +52,7 @@ h1 {
   border-radius: 10px;
   padding: 16px;
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
 }
 
 .libro h2 {
@@ -82,4 +83,93 @@ h1 {
 
 .estado-abandonado {
   background-color: #999;
+}
+
+/* --- Vista de capítulos --- */
+
+#vista-capitulos {
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+#boton-volver {
+  background: none;
+  border: none;
+  color: #4a90d9;
+  font-size: 1rem;
+  cursor: pointer;
+  padding: 0;
+  margin-bottom: 8px;
+}
+
+#form-capitulo {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  background-color: white;
+  border-radius: 10px;
+  padding: 16px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+}
+
+#fieldset-emociones {
+  border: none;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+#fieldset-emociones legend {
+  font-weight: bold;
+  margin-bottom: 4px;
+  padding: 0;
+}
+
+#fieldset-emociones label {
+  font-size: 0.9rem;
+  background-color: #f0ebe3;
+  padding: 4px 10px;
+  border-radius: 20px;
+}
+
+#input-nota {
+  font-family: inherit;
+  font-size: 1rem;
+  padding: 8px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  resize: vertical;
+}
+
+#form-capitulo button {
+  font-size: 1rem;
+  padding: 8px;
+  border-radius: 6px;
+  border: none;
+  background-color: #4a90d9;
+  color: white;
+  cursor: pointer;
+}
+
+.capitulo {
+  background-color: white;
+  border-radius: 10px;
+  padding: 16px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: 12px;
+}
+
+.capitulo h3 {
+  margin: 0 0 4px 0;
+}
+
+.capitulo p {
+  margin: 0 0 4px 0;
+  color: #555;
+}
+
+.nota-capitulo {
+  font-style: italic;
 }

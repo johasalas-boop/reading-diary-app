@@ -7,20 +7,51 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h1>Mi biblioteca</h1>
+  <div id="vista-biblioteca">
+    <h1>Mi biblioteca</h1>
 
-  <form id="form-agregar">
-    <input type="text" id="input-titulo" placeholder="Título" required>
-    <input type="text" id="input-autor" placeholder="Autor" required>
-    <select id="input-estado">
-      <option value="leyendo">Leyendo</option>
-      <option value="terminado">Terminado</option>
-      <option value="abandonado">Abandonado</option>
-    </select>
-    <button type="submit">Agregar</button>
-  </form>
+    <form id="form-agregar">
+      <input type="text" id="input-titulo" placeholder="Título" required>
+      <input type="text" id="input-autor" placeholder="Autor" required>
+      <select id="input-estado">
+        <option value="leyendo">Leyendo</option>
+        <option value="terminado">Terminado</option>
+        <option value="abandonado">Abandonado</option>
+      </select>
+      <button type="submit">Agregar</button>
+    </form>
 
-  <div id="biblioteca"></div>
+    <div id="biblioteca"></div>
+  </div>
+
+  <div id="vista-capitulos" style="display: none;">
+    <button id="boton-volver">← Volver a biblioteca</button>
+    <h1 id="titulo-libro-actual"></h1>
+
+    <form id="form-capitulo">
+      <label for="input-intensidad">Intensidad emocional: <span id="valor-intensidad">0</span></label>
+      <input type="range" id="input-intensidad" min="0" max="5" step="1" value="0">
+
+      <fieldset id="fieldset-emociones">
+        <legend>Emociones</legend>
+        <label><input type="checkbox" name="emocion" value="tristeza"> Tristeza</label>
+        <label><input type="checkbox" name="emocion" value="tension"> Tensión</label>
+        <label><input type="checkbox" name="emocion" value="risa"> Risa</label>
+        <label><input type="checkbox" name="emocion" value="ternura"> Ternura</label>
+        <label><input type="checkbox" name="emocion" value="enojo"> Enojo</label>
+        <label><input type="checkbox" name="emocion" value="ansiedad"> Ansiedad</label>
+        <label><input type="checkbox" name="emocion" value="sorpresa"> Sorpresa</label>
+        <label><input type="checkbox" name="emocion" value="spicy"> Spicy</label>
+        <label><input type="checkbox" name="emocion" value="cringe"> Cringe</label>
+      </fieldset>
+
+      <textarea id="input-nota" placeholder="Nota corta (opcional)"></textarea>
+
+      <button type="submit">Agregar capítulo</button>
+    </form>
+
+    <div id="lista-capitulos"></div>
+  </div>
 
   <script src="script.js"></script>
 </body>
