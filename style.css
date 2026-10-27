@@ -1,9 +1,33 @@
+/* Paleta de colores: variables CSS, como "cajitas" con nombre que podés
+   reutilizar en toda la hoja de estilos. Si querés cambiar un color más
+   adelante, lo cambiás acá una sola vez y se actualiza en todos lados. */
+:root {
+  --color-fondo: #fbf6fb;
+  --color-texto: #4a3b5c;
+  --color-texto-suave: #8577a0;
+  --color-tarjeta: #ffffff;
+  --color-borde: #e6dcf0;
+  --sombra: 0 2px 8px rgba(154, 130, 204, 0.15);
+
+  --color-lavanda: #9b82cc;
+  --color-lavanda-suave: #e7def5;
+  --color-rosa: #e89bc2;
+  --color-menta: #6fc4a4;
+  --color-gris-pastel: #a79bc0;
+  --color-peligro: #d98ca6;
+}
+
 body {
-  font-family: sans-serif;
-  background-color: #faf6f0;
-  color: #2e2e2e;
+  font-family: "Nunito", sans-serif;
+  background-color: var(--color-fondo);
+  color: var(--color-texto);
   margin: 0;
   padding: 16px;
+}
+
+h1, h2, h3, legend {
+  font-family: "Quicksand", sans-serif;
+  font-weight: 700;
 }
 
 h1 {
@@ -17,37 +41,42 @@ h1 {
   gap: 8px;
   max-width: 500px;
   margin: 0 auto 20px auto;
-  background-color: white;
-  border-radius: 10px;
+  background-color: var(--color-tarjeta);
+  border-radius: 14px;
   padding: 16px;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--sombra);
 }
 
 #form-agregar input,
 #form-agregar select {
+  font-family: inherit;
   font-size: 1rem;
   padding: 8px;
-  border-radius: 6px;
-  border: 1px solid #ccc;
+  border-radius: 8px;
+  border: 1px solid var(--color-borde);
+  color: var(--color-texto);
 }
 
 #boton-guardar-libro {
+  font-family: inherit;
   font-size: 1rem;
+  font-weight: 600;
   padding: 8px;
-  border-radius: 6px;
-  background-color: #4a90d9;
+  border-radius: 8px;
+  background-color: var(--color-lavanda);
   color: white;
   border: none;
   cursor: pointer;
 }
 
 #form-agregar #boton-cancelar-edicion-libro {
+  font-family: inherit;
   font-size: 1rem;
   padding: 8px;
-  border-radius: 6px;
+  border-radius: 8px;
   background: none;
-  color: #2e2e2e;
-  border: 1px solid #ccc;
+  color: var(--color-texto);
+  border: 1px solid var(--color-borde);
   cursor: pointer;
 }
 
@@ -60,10 +89,10 @@ h1 {
 }
 
 .libro {
-  background-color: white;
-  border-radius: 10px;
+  background-color: var(--color-tarjeta);
+  border-radius: 14px;
   padding: 16px;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--sombra);
   cursor: pointer;
 }
 
@@ -74,7 +103,7 @@ h1 {
 
 .libro p {
   margin: 0 0 8px 0;
-  color: #666;
+  color: var(--color-texto-suave);
 }
 
 .estado {
@@ -82,19 +111,20 @@ h1 {
   padding: 4px 10px;
   border-radius: 20px;
   font-size: 0.85rem;
+  font-weight: 600;
   color: white;
 }
 
 .estado-leyendo {
-  background-color: #4a90d9;
+  background-color: var(--color-lavanda);
 }
 
 .estado-terminado {
-  background-color: #4caf50;
+  background-color: var(--color-menta);
 }
 
 .estado-abandonado {
-  background-color: #999;
+  background-color: var(--color-gris-pastel);
 }
 
 .acciones-libro {
@@ -104,22 +134,23 @@ h1 {
 }
 
 .acciones-libro button {
+  font-family: inherit;
   font-size: 0.85rem;
   padding: 6px 12px;
-  border-radius: 6px;
-  border: 1px solid #ccc;
-  background-color: white;
+  border-radius: 8px;
+  border: 1px solid var(--color-borde);
+  background-color: var(--color-tarjeta);
   cursor: pointer;
 }
 
 .boton-editar-libro {
-  color: #4a90d9;
-  border-color: #4a90d9;
+  color: var(--color-lavanda);
+  border-color: var(--color-lavanda);
 }
 
 .boton-borrar-libro {
-  color: #c0392b;
-  border-color: #c0392b;
+  color: var(--color-peligro);
+  border-color: var(--color-peligro);
 }
 
 /* --- Vista de capítulos --- */
@@ -130,10 +161,12 @@ h1 {
 }
 
 #boton-volver {
+  font-family: inherit;
   background: none;
   border: none;
-  color: #4a90d9;
+  color: var(--color-lavanda);
   font-size: 1rem;
+  font-weight: 600;
   cursor: pointer;
   padding: 0;
   margin-bottom: 8px;
@@ -143,11 +176,20 @@ h1 {
   display: flex;
   flex-direction: column;
   gap: 10px;
-  background-color: white;
-  border-radius: 10px;
+  background-color: var(--color-tarjeta);
+  border-radius: 14px;
   padding: 16px;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--sombra);
   margin-bottom: 20px;
+}
+
+#form-capitulo input[type="text"] {
+  font-family: inherit;
+  font-size: 1rem;
+  padding: 8px;
+  border-radius: 8px;
+  border: 1px solid var(--color-borde);
+  color: var(--color-texto);
 }
 
 #fieldset-emociones {
@@ -159,7 +201,7 @@ h1 {
 }
 
 #fieldset-emociones legend {
-  font-weight: bold;
+  font-size: 1rem;
   margin-bottom: 4px;
   padding: 0;
 }
@@ -171,10 +213,11 @@ h1 {
 }
 
 .chip-emocion {
-  font-size: 0.9rem;
   font-family: inherit;
-  background-color: #f0ebe3;
-  color: #2e2e2e;
+  font-size: 0.9rem;
+  font-weight: 600;
+  background-color: var(--color-lavanda-suave);
+  color: var(--color-texto);
   padding: 4px 12px;
   border-radius: 20px;
   border: 1px solid transparent;
@@ -182,7 +225,7 @@ h1 {
 }
 
 .chip-emocion.seleccionado {
-  background-color: #4a90d9;
+  background-color: var(--color-lavanda);
   color: white;
 }
 
@@ -193,19 +236,23 @@ h1 {
 
 #agregar-emocion input {
   flex: 1;
+  font-family: inherit;
   font-size: 0.9rem;
   padding: 6px 10px;
-  border-radius: 6px;
-  border: 1px solid #ccc;
+  border-radius: 8px;
+  border: 1px solid var(--color-borde);
+  color: var(--color-texto);
 }
 
 #agregar-emocion button {
+  font-family: inherit;
   font-size: 0.9rem;
+  font-weight: 600;
   padding: 6px 12px;
-  border-radius: 6px;
-  border: 1px solid #4a90d9;
-  background-color: white;
-  color: #4a90d9;
+  border-radius: 8px;
+  border: 1px solid var(--color-lavanda);
+  background-color: var(--color-tarjeta);
+  color: var(--color-lavanda);
   cursor: pointer;
 }
 
@@ -213,36 +260,40 @@ h1 {
   font-family: inherit;
   font-size: 1rem;
   padding: 8px;
-  border-radius: 6px;
-  border: 1px solid #ccc;
+  border-radius: 8px;
+  border: 1px solid var(--color-borde);
+  color: var(--color-texto);
   resize: vertical;
 }
 
 #boton-guardar-capitulo {
+  font-family: inherit;
   font-size: 1rem;
+  font-weight: 600;
   padding: 8px;
-  border-radius: 6px;
+  border-radius: 8px;
   border: none;
-  background-color: #4a90d9;
+  background-color: var(--color-lavanda);
   color: white;
   cursor: pointer;
 }
 
 .capitulo {
-  background-color: white;
-  border-radius: 10px;
+  background-color: var(--color-tarjeta);
+  border-radius: 14px;
   padding: 16px;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--sombra);
   margin-bottom: 12px;
 }
 
 .capitulo h3 {
   margin: 0 0 4px 0;
+  font-size: 1.05rem;
 }
 
 .capitulo p {
   margin: 0 0 4px 0;
-  color: #555;
+  color: var(--color-texto-suave);
 }
 
 .nota-capitulo {
@@ -256,19 +307,20 @@ h1 {
 }
 
 .acciones-capitulo button {
+  font-family: inherit;
   font-size: 0.85rem;
   padding: 6px 12px;
-  border-radius: 6px;
-  border: 1px solid #ccc;
-  background-color: white;
+  border-radius: 8px;
+  border: 1px solid var(--color-borde);
+  background-color: var(--color-tarjeta);
   cursor: pointer;
 }
 
 #seccion-grafico {
-  background-color: white;
-  border-radius: 10px;
+  background-color: var(--color-tarjeta);
+  border-radius: 14px;
   padding: 16px;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--sombra);
   margin-bottom: 20px;
 }
 
@@ -283,44 +335,45 @@ h1 {
 }
 
 #mensaje-grafico-vacio {
-  color: #888;
+  color: var(--color-texto-suave);
   font-size: 0.9rem;
   margin: 0;
 }
 
 .linea-nivel {
-  stroke: #e5e0d8;
+  stroke: var(--color-lavanda-suave);
   stroke-width: 1;
 }
 
 .etiqueta-nivel {
   font-size: 8px;
-  fill: #999;
+  fill: var(--color-texto-suave);
   text-anchor: end;
 }
 
 .linea-curva {
   fill: none;
-  stroke: #4a90d9;
+  stroke: var(--color-lavanda);
   stroke-width: 2;
 }
 
 .punto-curva {
-  fill: #4a90d9;
+  fill: var(--color-lavanda);
 }
 
 .boton-editar {
-  color: #4a90d9;
-  border-color: #4a90d9;
+  color: var(--color-lavanda);
+  border-color: var(--color-lavanda);
 }
 
 .boton-borrar {
-  color: #c0392b;
-  border-color: #c0392b;
+  color: var(--color-peligro);
+  border-color: var(--color-peligro);
 }
 
 #form-capitulo #boton-cancelar-edicion {
+  font-family: inherit;
   background: none;
-  color: #2e2e2e;
-  border: 1px solid #ccc;
+  color: var(--color-texto);
+  border: 1px solid var(--color-borde);
 }
